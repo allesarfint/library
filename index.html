@@ -4,10 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css" type="text/style">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
     <title>Library App</title>
 </head>
 <body>
+    <main>
+        <nav>
+            <h1>Library App</h1>
+            <div id="new-book">
+                <span id="stats"></span>
+                <button id="new-book-button">New Book</button>
+            </div>
+        </nav>
+        <div class="modal hide">
+            <button id="close">Close</button>
+            <form id="book-form">
+                <label for="input-title">Title</label>
+                <input id="input-title" type="text">
+                <label for="input-author">Author</label>
+                <input id="input-author" type="text">
+                <label for="input-pages">Number of Pages</label>
+                <input id="input-pages" type="number">
+                <div>
+                    <input id="check-read" type="checkbox">
+                    <label for="check-read">You have read it</label>
+                </div>
+                <button type="button" id="add-book">Add Book</button>
+            </form>
+        </div>
+        <content>
+            
+        </content>
+    </main>
     <script src="js/main.js"></script>
 </body>
 </html>
