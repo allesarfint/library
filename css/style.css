@@ -76,11 +76,11 @@ content {
     height: 250px;
     display: flex;
     border-radius: 2px;
-    background-color: rgb(250, 250, 250);
+    background-color: rgb(240, 240, 240);
 }
 
 .readed {
-    background-color: rgb(240, 250, 250);
+    background-color: rgb(230, 250, 250);
 }
 
 .book-cover {
