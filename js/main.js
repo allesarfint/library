@@ -23,6 +23,88 @@ function Book(title, author, pages, read, cover) {
     this.cover = cover
 }
 
+
+function addBookToLibrary(title, author, pages, read, cover = defaultImg, library) {
+    if (!title) return
+    if (!author) author = "Anonymous"
+    if (!pages) pages = "Unknown"
+    const book = new Book(title, author, pages, read, cover);
+    library.push(book);
+}
+
+function createBookCard(title, author, pages, read, cover, index) {
+    const bookCard = document.createElement("div");
+    bookCard.classList.add("book-card");
+    bookCard.dataset.book = index;
+    const bookCover = document.createElement("div");
+        bookCover.classList.add("book-cover");
+        bookCard.appendChild(bookCover);
+            const imgCover = document.createElement("img");
+            imgCover.src = cover;
+            bookCover.appendChild(imgCover);
+        const bookDetails = document.createElement("div");
+        bookDetails.classList.add("book-details");
+        bookCard.appendChild(bookDetails);
+            const deleteDiv = document.createElement("div");
+            deleteDiv.classList.add("delete");
+            bookDetails.appendChild(deleteDiv);
+                const deleteButton = document.createElement("button");
+                deleteButton.classList.add("delete-button");
+                deleteButton.dataset.deleteBook = index;
+                deleteButton.textContent = `🗑️`;
+                deleteDiv.appendChild(deleteButton);
+            const bookInfo = document.createElement("div");
+            bookInfo.classList.add("book-info");
+            bookDetails.appendChild(bookInfo);
+            const bookTitle = document.createElement("div");
+                bookTitle.classList.add("book-title", "info");
+                bookTitle.textContent = title;
+                bookInfo.appendChild(bookTitle);
+                const bookAuthor = document.createElement("div");
+                bookAuthor.classList.add("book-author", "info");
+                bookAuthor.textContent = author;
+                bookInfo.appendChild(bookAuthor);
+                const bookPages = document.createElement("div");
+                bookPages.classList.add("book-pages", "info");
+                bookPages.textContent = `Pages: ${pages}`;
+                bookInfo.appendChild(bookPages);
+                const bookRead = document.createElement("div");
+                bookRead.classList.add("book-read", "info");
+                bookInfo.appendChild(bookRead);
+                    const readCheck = document.createElement("input");
+                    readCheck.type = "checkbox";
+                    readCheck.id = index;
+                    readCheck.classList.add("read");
+                    if(read === true) {
+                        readCheck.checked = true;
+                        bookCard.classList.add("readed");
+                    }
+                    bookRead.appendChild(readCheck);
+                    const labelRead = document.createElement("label");
+                    labelRead.classList.add("label-read");
+                    labelRead.htmlFor = index;
+                    labelRead.textContent = "Already read";
+                    bookRead.appendChild(labelRead);
+
+    return bookCard    
+}
+
+const content = document.querySelector("content");
+
+function appendLibraryToContent(array, content) {
+    array.forEach((book, index) => {
+        const   title = book.title,
+                author = book.author,
+                pages = book.pages,
+                read = book.read,
+                cover = book.cover;
+                const newBook = createBookCard(title, author, pages, read, cover, index);
+        content.appendChild(newBook);
+    });
+}
+
+appendLibraryToContent(myLibrary, content);
+
 const newBookButton = document.querySelector("#new-book-button");
 const modal = document.querySelector(".modal");
 
@@ -53,92 +135,28 @@ closeModalButton.addEventListener("click", () => {
     closeModal()
 })
 
+function addBookToContent(title, author, pages, read, cover, content) {
+    if (!title) return
+    if (!author) author = "Anonymous"
+    if (!pages) pages = "Unknown"
+
+    const index = content.lastChild.dataset.book;
+
+    const newBook = createBookCard(title, author, pages, read, cover, index);
+    content.appendChild(newBook);
+}
+
 addBookButton.addEventListener("click", () => {
 
     let title = inputTitle.value,
         author = inputAuthor.value,
         pages = inputPages.value,
         read = checkRead.checked,
-        library = myLibrary;
+        library = myLibrary,
+        content = document.querySelector("content");
 
     closeModal()
 
-    addBookToLibrary(title, author = "Anonymous", pages = "Unknown", read, cover = defaultImg, library)
+    addBookToLibrary(title, author, pages, read, defaultImg, library)
+    addBookToContent(title, author, pages, read, defaultImg, content)
 })
-
-function addBookToLibrary(title, author, pages, read, cover, library) {
-    if (!title) return
-    const book = new Book(title, author, pages, read, cover);
-    library.push(book);
-}
-
-function createBookCard(title, author, pages, read, cover, index) {
-    const bookCard = document.createElement("div");
-    bookCard.classList.add("book-card");
-        const bookCover = document.createElement("div");
-        bookCover.classList.add("book-cover");
-        bookCard.appendChild(bookCover);
-            const imgCover = document.createElement("img");
-            imgCover.src = cover;
-            bookCover.appendChild(imgCover);
-        const bookDetails = document.createElement("div");
-        bookDetails.classList.add("book-details");
-        bookCard.appendChild(bookDetails);
-            const deleteDiv = document.createElement("div");
-            deleteDiv.classList.add("delete");
-            bookDetails.appendChild(deleteDiv);
-                const deleteButton = document.createElement("button");
-                deleteButton.classList.add("delete-button");
-                deleteButton.textContent = `🗑️`;
-                deleteDiv.appendChild(deleteButton);
-            const bookInfo = document.createElement("div");
-            bookInfo.classList.add("book-info");
-            bookDetails.appendChild(bookInfo);
-                const bookTitle = document.createElement("div");
-                bookTitle.classList.add("book-title", "info");
-                bookTitle.textContent = title;
-                bookInfo.appendChild(bookTitle);
-                const bookAuthor = document.createElement("div");
-                bookAuthor.classList.add("book-author", "info");
-                bookAuthor.textContent = author;
-                bookInfo.appendChild(bookAuthor);
-                const bookPages = document.createElement("div");
-                bookPages.classList.add("book-pages", "info");
-                bookPages.textContent = `${pages} pages`;
-                bookInfo.appendChild(bookPages);
-                const bookRead = document.createElement("div");
-                bookRead.classList.add("book-read", "info");
-                bookInfo.appendChild(bookRead);
-                    const readCheck = document.createElement("input");
-                    readCheck.type = "checkbox";
-                    readCheck.id = index;
-                    readCheck.classList.add("read");
-                    if(read === true) {
-                        readCheck.checked = true;
-                        bookCard.classList.add("readed");
-                    }
-                    bookRead.appendChild(readCheck);
-                    const labelRead = document.createElement("label");
-                    labelRead.classList.add("label-read");
-                    labelRead.htmlFor = index;
-                    labelRead.textContent = "Already read";
-                    bookRead.appendChild(labelRead);
-
-    return bookCard    
-}
-
-const content = document.querySelector("content");
-
-function appendBookCardToContent(array, content) {
-    array.forEach((book, index) => {
-        const   title = book.title,
-                author = book.author,
-                pages = book.pages,
-                read = book.read,
-                cover = book.cover;
-        const newBook = createBookCard(title, author, pages, read, cover, index);
-        content.appendChild(newBook);
-    });
-}
-
-appendBookCardToContent(myLibrary, content);
