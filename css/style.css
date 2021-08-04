@@ -79,6 +79,10 @@ content {
     background-color: rgb(250, 250, 250);
 }
 
+.readed {
+    background-color: rgb(240, 250, 250);
+}
+
 .book-cover {
     display: flex;
     align-items: center;
