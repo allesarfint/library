@@ -1,7 +1,7 @@
 let myLibrary = [
     {
-        title: "Don Quijote",
-        author: "Miguel de Cervantes",
+        title: "Don Quijote de la Mancha",
+        author: "Miguel de Cervantes Saavedra",
         pages: "1000",
         read: false,
         cover: "https://www.makaobora.co.ke/bora/wp-content/uploads/2020/03/DON-QUIXOTE.jpg",
@@ -10,7 +10,7 @@ let myLibrary = [
         title: "Cien Años de Soledad",
         author: "Gabriel Garcia Marquez",
         pages: "500",
-        read: false,
+        read: true,
         cover: "https://www.popularlibros.com/imagenes_grandes/9788497/978849759220.JPG",
     },
 ];
@@ -23,14 +23,56 @@ function Book(title, author, pages, read, cover) {
     this.cover = cover
 }
 
-function addBookToLibrary(title, author, pages, cover, read, library) {
+const newBookButton = document.querySelector("#new-book-button");
+const modal = document.querySelector(".modal");
+
+newBookButton.addEventListener("click", () => {
+    modal.classList.toggle("hide");
+})
+
+let inputTitle = document.querySelector("#input-title"),
+    inputAuthor = document.querySelector("#input-author"),
+    inputPages = document.querySelector("#input-pages"),
+    checkRead = document.querySelector("#check-read");
+    
+const defaultImg = "https://code-artisan.io/wp-content/uploads/2020/12/default_book_cover_2015.jpg";
+
+const   addBookButton = document.querySelector("#add-book"),
+        closeModalButton = document.querySelector("#close");
+
+function closeModal() {
+    inputTitle.value = "";
+    inputAuthor.value = "";
+    inputPages.value = "";
+    checkRead.checked = false;
+
+    modal.classList.toggle("hide");
+}
+
+closeModalButton.addEventListener("click", () => {
+    closeModal()
+})
+
+addBookButton.addEventListener("click", () => {
+
+    let title = inputTitle.value,
+        author = inputAuthor.value,
+        pages = inputPages.value,
+        read = checkRead.checked,
+        library = myLibrary;
+
+    closeModal()
+
+    addBookToLibrary(title, author = "Anonymous", pages = "Unknown", read, cover = defaultImg, library)
+})
+
+function addBookToLibrary(title, author, pages, read, cover, library) {
+    if (!title) return
     const book = new Book(title, author, pages, read, cover);
     library.push(book);
 }
 
-const content = document.querySelector("content");
-
-function createCard(title, author, pages, cover, read, index) {
+function createBookCard(title, author, pages, read, cover, index) {
     const bookCard = document.createElement("div");
     bookCard.classList.add("book-card");
         const bookCover = document.createElement("div");
@@ -79,10 +121,24 @@ function createCard(title, author, pages, cover, read, index) {
                     const labelRead = document.createElement("label");
                     labelRead.classList.add("label-read");
                     labelRead.htmlFor = index;
-                    labelRead.textContent = "Read";
+                    labelRead.textContent = "Already read";
                     bookRead.appendChild(labelRead);
 
     return bookCard    
 }
 
-content.appendChild(createCard("Don Quijote", "Miguel de Cervantes", 1000, "https://www.popularlibros.com/imagenes_grandes/9788497/978849759220.JPG", false, 0));
+const content = document.querySelector("content");
+
+function appendBookCardToContent(array, content) {
+    array.forEach((book, index) => {
+        const   title = book.title,
+                author = book.author,
+                pages = book.pages,
+                read = book.read,
+                cover = book.cover;
+        const newBook = createBookCard(title, author, pages, read, cover, index);
+        content.appendChild(newBook);
+    });
+}
+
+appendBookCardToContent(myLibrary, content);
