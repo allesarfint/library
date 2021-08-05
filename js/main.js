@@ -55,7 +55,6 @@ function createBookCard(title, author, pages, read, cover, index) {
                 deleteButton.classList.add("delete-button");
                 deleteButton.dataset.deleteBook = index;
                 deleteButton.addEventListener("click", () => {
-                    const index = deleteButton.dataset.deleteBook;
                     deleteBookFromLibrary(index);
                     deleteBookFromContent(index);
                 })
@@ -88,7 +87,8 @@ function createBookCard(title, author, pages, read, cover, index) {
                         bookCard.classList.add("readed");
                     }
                     readCheck.addEventListener("change", () => {
-                        bookCard.classList.toggle("readed");                        
+                        bookCard.classList.toggle("readed");
+                        changeReadStatus(index, readCheck.checked)
                     })
                     bookRead.appendChild(readCheck);
                     const labelRead = document.createElement("label");
@@ -97,7 +97,7 @@ function createBookCard(title, author, pages, read, cover, index) {
                     labelRead.textContent = "Already read";
                     bookRead.appendChild(labelRead);
 
-    return bookCard    
+    return bookCard
 }
 
 // Append Book cards stored in the myLibrary Arra as childnodes in the DOM
@@ -190,4 +190,9 @@ function deleteBookFromLibrary(index) {
 function deleteBookFromContent(index) {
     const elem = document.querySelector(`[data-book="${index}"]`)
     content.removeChild(elem);
+}
+
+// Function to change read status on Book object from myLibrary Array
+function changeReadStatus(index, status) {
+    myLibrary[index].read = status;
 }
