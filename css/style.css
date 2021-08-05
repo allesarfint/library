@@ -21,6 +21,8 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
+    top : 0;
+    position: fixed;
 }
 
 h1 {
@@ -28,10 +30,6 @@ h1 {
     text-align: center;
     font-size: 2rem;
 }
-
-/* #new-book {
-    width: 10%;
-} */
 
 #new-book-button {
     border: 3px dotted black;
@@ -90,6 +88,7 @@ content {
     gap: 10px;
     justify-content: space-around;
     align-content: space-around;
+    margin-top: 110px;
 }
 
 @media (max-width: 1200px) {
