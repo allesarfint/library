@@ -1,20 +1,24 @@
 // Array to hold the books
-let myLibrary = [
-    {
-        title: "Don Quijote de la Mancha",
-        author: "Miguel de Cervantes Saavedra",
-        pages: "1000",
-        read: false,
-        cover: "https://www.makaobora.co.ke/bora/wp-content/uploads/2020/03/DON-QUIXOTE.jpg",
-    },
-    {
-        title: "Cien Años de Soledad",
-        author: "Gabriel Garcia Marquez",
-        pages: "500",
-        read: true,
-        cover: "https://www.popularlibros.com/imagenes_grandes/9788497/978849759220.JPG",
-    },
-];
+let myLibrary = [];
+
+// Create localStorage is empty
+if(!localStorage.getItem("myLibrary")) {
+    localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+}
+
+// Function to retrieve localStorage myLibrary data
+function getMyLibraryFromLocalStorage() {
+    const localStorageLibrary = JSON.parse(localStorage.getItem("myLibrary"));
+    myLibrary = localStorageLibrary;
+}
+
+getMyLibraryFromLocalStorage()
+
+// Function to save myLibrary to localStorage
+function setMyLibraryToLocalStorage(library) {
+    const stringLibrary = JSON.stringify(library.filter(n => n));
+    localStorage.myLibrary = stringLibrary;
+}
 
 // Object prototype for the book
 function Book(title, author, pages, read, cover) {
@@ -32,6 +36,7 @@ function addBookToLibrary(title, author, pages, read, cover = defaultImg, librar
     if (!pages) pages = "Unknown"
     const book = new Book(title, author, pages, read, cover);
     library.push(book);
+    setMyLibraryToLocalStorage(library);
 }
 
 // Create HTML cards based on the Book objects from myLibrary Array
@@ -184,6 +189,7 @@ addBookButton.addEventListener("click", () => {
 // Function to delete books from myLibrary Array
 function deleteBookFromLibrary(index) {
     delete myLibrary[index];
+    setMyLibraryToLocalStorage(myLibrary)
 }
 
 // Function to delete book card from DOM
@@ -195,4 +201,5 @@ function deleteBookFromContent(index) {
 // Function to change read status on Book object from myLibrary Array
 function changeReadStatus(index, status) {
     myLibrary[index].read = status;
+    setMyLibraryToLocalStorage(myLibrary)
 }
