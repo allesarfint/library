@@ -1,3 +1,5 @@
+//TODO: Get book cover img from search query
+
 // Array to hold the books
 let myLibrary = [];
 
