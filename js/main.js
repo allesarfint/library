@@ -1,3 +1,4 @@
+// Array to hold the books
 let myLibrary = [
     {
         title: "Don Quijote de la Mancha",
@@ -15,6 +16,7 @@ let myLibrary = [
     },
 ];
 
+// Object prototype for the book
 function Book(title, author, pages, read, cover) {
     this.title = title
     this.author = author
@@ -23,7 +25,7 @@ function Book(title, author, pages, read, cover) {
     this.cover = cover
 }
 
-
+// Construct and push new object Book object to myLibrary Array 
 function addBookToLibrary(title, author, pages, read, cover = defaultImg, library) {
     if (!title) return
     if (!author) author = "Anonymous"
@@ -32,6 +34,7 @@ function addBookToLibrary(title, author, pages, read, cover = defaultImg, librar
     library.push(book);
 }
 
+// Create HTML cards based on the Book objects from myLibrary Array
 function createBookCard(title, author, pages, read, cover, index) {
     const bookCard = document.createElement("div");
     bookCard.classList.add("book-card");
@@ -89,6 +92,7 @@ function createBookCard(title, author, pages, read, cover, index) {
     return bookCard    
 }
 
+// Append Book cards stored in the myLibrary Arra as childnodes in the DOM
 const content = document.querySelector("content");
 
 function appendLibraryToContent(array, content) {
@@ -98,16 +102,20 @@ function appendLibraryToContent(array, content) {
                 pages = book.pages,
                 read = book.read,
                 cover = book.cover;
-                const newBook = createBookCard(title, author, pages, read, cover, index);
+
+        const newBook = createBookCard(title, author, pages, read, cover, index);
+
         content.appendChild(newBook);
     });
 }
 
 appendLibraryToContent(myLibrary, content);
 
+// Modal functionality
 const newBookButton = document.querySelector("#new-book-button");
 const modal = document.querySelector(".modal");
 
+    // Make the modal visible
 newBookButton.addEventListener("click", () => {
     modal.classList.toggle("hide");
 })
@@ -122,6 +130,7 @@ const defaultImg = "https://code-artisan.io/wp-content/uploads/2020/12/default_b
 const   addBookButton = document.querySelector("#add-book"),
         closeModalButton = document.querySelector("#close");
 
+        // Function to hide the modal
 function closeModal() {
     inputTitle.value = "";
     inputAuthor.value = "";
@@ -135,6 +144,7 @@ closeModalButton.addEventListener("click", () => {
     closeModal()
 })
 
+// Append new created Book cards as childnodes in the DOM
 function addBookToContent(title, author, pages, read, cover, content) {
     if (!title) return
     if (!author) author = "Anonymous"
@@ -146,6 +156,8 @@ function addBookToContent(title, author, pages, read, cover, content) {
     content.appendChild(newBook);
 }
 
+// Event listener to create new Book object based on user input
+// Add to myLibrary Array and append to DOM
 addBookButton.addEventListener("click", () => {
 
     let title = inputTitle.value,
