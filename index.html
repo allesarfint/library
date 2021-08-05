@@ -12,19 +12,24 @@
         <nav>
             <h1>Library App</h1>
             <div id="new-book">
-                <span id="stats"></span>
-                <button id="new-book-button">New Book</button>
+                <button id="new-book-button">+</button>
             </div>
         </nav>
         <div class="modal hide">
-            <button id="close">Close</button>
+            <button id="close">X</button>
             <form id="book-form">
-                <label for="input-title">Title</label>
-                <input id="input-title" type="text">
-                <label for="input-author">Author</label>
-                <input id="input-author" type="text">
-                <label for="input-pages">Number of Pages</label>
-                <input id="input-pages" type="number">
+                <span class="form-input">
+                    <label for="input-title">Title</label>
+                    <input id="input-title" type="text">
+                </span>
+                <span class="form-input">
+                    <label for="input-author">Author</label>
+                    <input id="input-author" type="text">
+                </span>
+                <span class="form-input">
+                    <label for="input-pages">Number of Pages</label>
+                    <input id="input-pages" type="number">
+                </span>
                 <div>
                     <input id="check-read" type="checkbox">
                     <label for="check-read">Already read</label>
