@@ -150,7 +150,7 @@ function addBookToContent(title, author, pages, read, cover, content) {
     if (!author) author = "Anonymous"
     if (!pages) pages = "Unknown"
 
-    const index = content.lastChild.dataset.book;
+    const index = +content.lastChild.dataset.book + 1;
 
     const newBook = createBookCard(title, author, pages, read, cover, index);
     content.appendChild(newBook);
