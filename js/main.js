@@ -54,6 +54,11 @@ function createBookCard(title, author, pages, read, cover, index) {
                 const deleteButton = document.createElement("button");
                 deleteButton.classList.add("delete-button");
                 deleteButton.dataset.deleteBook = index;
+                deleteButton.addEventListener("click", () => {
+                    const index = deleteButton.dataset.deleteBook;
+                    deleteBookFromLibrary(index);
+                    deleteBookFromContent(index);
+                })
                 deleteButton.textContent = `🗑️`;
                 deleteDiv.appendChild(deleteButton);
             const bookInfo = document.createElement("div");
@@ -82,6 +87,9 @@ function createBookCard(title, author, pages, read, cover, index) {
                         readCheck.checked = true;
                         bookCard.classList.add("readed");
                     }
+                    readCheck.addEventListener("change", () => {
+                        bookCard.classList.toggle("readed");                        
+                    })
                     bookRead.appendChild(readCheck);
                     const labelRead = document.createElement("label");
                     labelRead.classList.add("label-read");
@@ -102,7 +110,7 @@ function appendLibraryToContent(array, content) {
                 pages = book.pages,
                 read = book.read,
                 cover = book.cover;
-
+        
         const newBook = createBookCard(title, author, pages, read, cover, index);
 
         content.appendChild(newBook);
@@ -130,7 +138,7 @@ const defaultImg = "https://code-artisan.io/wp-content/uploads/2020/12/default_b
 const   addBookButton = document.querySelector("#add-book"),
         closeModalButton = document.querySelector("#close");
 
-        // Function to hide the modal
+    // Function to hide the modal
 function closeModal() {
     inputTitle.value = "";
     inputAuthor.value = "";
@@ -150,7 +158,7 @@ function addBookToContent(title, author, pages, read, cover, content) {
     if (!author) author = "Anonymous"
     if (!pages) pages = "Unknown"
 
-    const index = +content.lastChild.dataset.book + 1;
+    const index = myLibrary.length - 1;
 
     const newBook = createBookCard(title, author, pages, read, cover, index);
     content.appendChild(newBook);
@@ -172,3 +180,14 @@ addBookButton.addEventListener("click", () => {
     addBookToLibrary(title, author, pages, read, defaultImg, library)
     addBookToContent(title, author, pages, read, defaultImg, content)
 })
+
+// Function to delete books from myLibrary Array
+function deleteBookFromLibrary(index) {
+    delete myLibrary[index];
+}
+
+// Function to delete book card from DOM
+function deleteBookFromContent(index) {
+    const elem = document.querySelector(`[data-book="${index}"]`)
+    content.removeChild(elem);
+}
