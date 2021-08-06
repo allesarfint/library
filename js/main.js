@@ -23,12 +23,8 @@ function setMyLibraryToLocalStorage(library) {
 }
 
 // Object prototype for the book
-function Book(title, author, pages, read, cover) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = read
-    this.cover = cover
+function book(title, author, pages, read, cover) {
+    return ({title, author, pages, read, cover})
 }
 
 // Construct and push new object Book object to myLibrary Array 
@@ -36,8 +32,8 @@ function addBookToLibrary(title, author, pages, read, cover = defaultImg, librar
     if (!title) return
     if (!author) author = "Anonymous"
     if (!pages) pages = "Unknown"
-    const book = new Book(title, author, pages, read, cover);
-    library.push(book);
+    const newBook = book(title, author, pages, read, cover);
+    library.push(newBook);
     setMyLibraryToLocalStorage(library);
 }
 
